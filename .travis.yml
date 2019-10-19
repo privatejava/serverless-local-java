@@ -1,4 +1,8 @@
 language: java
 
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
