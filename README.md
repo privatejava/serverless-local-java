@@ -8,9 +8,10 @@ Serverless Local Java is a cli tool for running serverless java application usin
   - Lambda execution
   - Fully containerized
 
-# Prerequisite 
+### Prerequisite 
+  - Java 8 
   - Docker 
-  - Maven Project
+  - Maven 
 
 ### Tech
 
@@ -27,7 +28,7 @@ Install the dependencies and devDependencies and start the server.
 
 ```sh
 $ mvn clean install
-$ echo "alias jsls='java -jar $(pwd)/target/aws-local-java.jar'" >> ~/.bashrc 
+$ echo "alias jsls='java -jar $(pwd)/target/serverless-local-java.jar'" >> ~/.bashrc 
 ```
 
 ### Development

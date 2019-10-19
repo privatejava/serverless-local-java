@@ -80,7 +80,7 @@
                             <mainClass>np.com.ngopal.serverless.local.Runner</mainClass>
                         </manifest>
                     </archive>
-                    <finalName>aws-local-java</finalName>
+                    <finalName>serverless-local-java</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
