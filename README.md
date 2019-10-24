@@ -15,7 +15,7 @@ Serverless Local Java is a cli tool for running serverless java application usin
 
 ### Tech
 
-Dillinger uses a number of open source projects to work properly:
+Tool uses a number of open source projects to work properly:
 
 * [Spark Java] - Spark Core
 * [Apache Commons] - Commandline arguments parsing
