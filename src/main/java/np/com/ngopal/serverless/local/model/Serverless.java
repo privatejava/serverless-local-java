@@ -23,7 +23,9 @@ public class Serverless {
     private String service;
     private Provider provider;
     private Map<String,Function> functions;
-    
+
+
+
     public Function getFunction(String functionName){
         for (String string : functions.keySet()) {
             if(functionName.equalsIgnoreCase(string)){

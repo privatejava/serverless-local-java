@@ -28,6 +28,14 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class LambdaExecutor {
 
+	private static void createEnv(CommandLine line){
+		Map<String, String> environment = Config.SERVERLESS.getProvider().getEnvironment();
+		for(String key : environment.keySet()){
+			line.addArgument("-e");
+			line.addArgument(String.format("%s=%s", key,environment.get(key)));
+		}
+	}
+
 	/**
 	 * Executes the lambda function by using the classpath and the docker image then forward the container's
 	 * std error and std output to the console.
@@ -45,6 +53,7 @@ public class LambdaExecutor {
 		line.addArgument("--memory");
 		line.addArgument(Config.SERVERLESS.getProvider().getMemorySize() + "m");
         line.addArgument("--rm");
+		createEnv(line);
 		line.addArgument("-v");
 		line.addArgument("" + file.getAbsolutePath() + "/target/classes:/var/task");
 		line.addArgument("lambci/lambda:java8");
@@ -53,7 +62,7 @@ public class LambdaExecutor {
 
 //        line.addArgument(body);
 		log.debug("{}", UtilsFactory.get().getMapper().writerWithDefaultPrettyPrinter().writeValueAsString(payload));
-		log.debug("{}", line);
+		log.debug("Commandline {}", line);
 		DefaultExecutor executor = new DefaultExecutor();
 		ByteArrayOutputStream stdOut = new ByteArrayOutputStream();
 		ByteArrayOutputStream stdErr = new ByteArrayOutputStream();

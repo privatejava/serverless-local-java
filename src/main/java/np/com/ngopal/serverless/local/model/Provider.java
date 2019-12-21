@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
 /**
  *
  * @author ngm
@@ -23,5 +25,6 @@ public class Provider {
     private String memorySize;
     private String stage;
     private int timeout;
+    private Map<String,String> environment;
     
 }
