@@ -22,6 +22,7 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Provider {
     private String name;
+    private String region;
     private String memorySize;
     private String stage;
     private int timeout;

@@ -30,9 +30,15 @@ public class LambdaExecutor {
 
 	private static void createEnv(CommandLine line){
 		Map<String, String> environment = Config.SERVERLESS.getProvider().getEnvironment();
+
 		for(String key : environment.keySet()){
 			line.addArgument("-e");
 			line.addArgument(String.format("%s=%s", key,environment.get(key)));
+		}
+
+		if(Config.SERVERLESS.getProvider().getRegion()!=null){
+			line.addArgument("-e");
+			line.addArgument(String.format("%s=%s", "AWS_REGION",Config.SERVERLESS.getProvider().getRegion()));
 		}
 	}
 

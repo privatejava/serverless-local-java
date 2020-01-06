@@ -22,7 +22,7 @@ public class AWSProfile {
 				if (stringPropertiesMap.containsKey(Config.PROFILE_NAME)) {
 					log.debug("Using Profile {}: {}",Config.PROFILE_NAME, stringPropertiesMap.get(Config.PROFILE_NAME));
 					for (final String name : stringPropertiesMap.get(Config.PROFILE_NAME).stringPropertyNames()) {
-						Config.SERVERLESS.getProvider().getEnvironment().put(name, stringPropertiesMap.get(Config.PROFILE_NAME).getProperty(name));
+						Config.SERVERLESS.getProvider().getEnvironment().put(name.toUpperCase(), stringPropertiesMap.get(Config.PROFILE_NAME).getProperty(name));
 					}
 				}
 
