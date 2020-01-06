@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import static np.com.ngopal.serverless.local.AWSProfile.processAWSProfile;
+
 /**
  * This class is the main class for handling the commandline arguments to run the local lambda instance using docker.
  * @author ngm
@@ -54,6 +56,8 @@ public class Runner {
                 compiler.executeDependency(directory);
                 serverless = YamlParser.parse(line.getOptionValue("p"));
                 Config.SERVERLESS = serverless;
+                Config.PROFILE_NAME = line.getOptionValue("P");
+                processAWSProfile();
             }
 
 

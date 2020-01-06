@@ -19,5 +19,7 @@ public class Config {
 	public static int PORT = 4567;
 
 	public static Serverless SERVERLESS;
+
+	public static String PROFILE_NAME;
 }
 
