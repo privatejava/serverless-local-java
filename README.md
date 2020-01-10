@@ -30,7 +30,7 @@ $ echo "alias jsls='java -jar $(pwd)/target/serverless-local-java.jar'" >> ~/.ba
 ```
 
 
-#Examples
+### Examples
 
 Lets try with the `examples/` folder where you can test it locally. 
 
