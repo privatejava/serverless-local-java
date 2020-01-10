@@ -33,6 +33,7 @@ public class Runner {
         options.addOption("s", true, "Run as server");
         options.addOption("f", true, "Function to run");
         options.addOption("i", true, "Input json");
+        options.addOption("I", true, "Docker Image");
 
         CommandLineParser parser = new DefaultParser();
 
@@ -65,6 +66,7 @@ public class Runner {
                 executed = true;
                 Config.SERVER = true;
                 Config.PORT = Integer.parseInt(line.getOptionValue("s"));
+                Config.IMAGE = line.getOptionValue("I")!=null?line.getOptionValue("I"):Config.IMAGE;
                 ApiServer server = new ApiServer(directory, serverless);
                 server.start();
 

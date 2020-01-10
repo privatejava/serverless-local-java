@@ -62,7 +62,7 @@ public class LambdaExecutor {
 		createEnv(line);
 		line.addArgument("-v");
 		line.addArgument("" + file.getAbsolutePath() + "/target/classes:/var/task");
-		line.addArgument("lambci/lambda:java8");
+		line.addArgument(Config.IMAGE);
 		line.addArgument(function.getHandler());
 		line.addArgument(body, false);
 

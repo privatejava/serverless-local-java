@@ -20,6 +20,8 @@ public class Config {
 
 	public static Serverless SERVERLESS;
 
+	public static String IMAGE = "lambci/lambda:java8";
+
 	public static String PROFILE_NAME;
 }
 
