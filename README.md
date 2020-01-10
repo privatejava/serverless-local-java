@@ -35,7 +35,7 @@ $ echo "alias jsls='java -jar $(pwd)/target/serverless-local-java.jar'" >> ~/.ba
 Lets try with the `examples/` folder where you can test it locally. 
 
 ```sh
-cd examples/simple-api1
+cd examples/simple-api
 mvn clean install
 ./run.sh
 ```
