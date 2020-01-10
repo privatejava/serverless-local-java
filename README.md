@@ -29,6 +29,30 @@ $ mvn clean install
 $ echo "alias jsls='java -jar $(pwd)/target/serverless-local-java.jar'" >> ~/.bashrc 
 ```
 
+
+#Examples
+
+Lets try with the `examples/` folder where you can test it locally. 
+
+```sh
+cd examples/simple-api1
+mvn clean install
+./run.sh
+```
+
+You should have a server running in `4567` port . Now lets send a simple curl request.
+```sh
+curl -d '{"name":"Tom"}' http://localhost:4567/api/simple-api
+```
+It should print like this:   
+```
+{"message":"Hello Tom"}
+```
+
+If you are using any IDE like Netbeans, IntelliJ which auto generates the classes for you and this tool will automatically pickup the new classes and no need to re-run. You can use your own lambda layers with custom docker image to run your lambda.  
+
+
+
 ### Development
 
 Want to contribute? Great!

@@ -67,6 +67,7 @@ public class Runner {
                 Config.SERVER = true;
                 Config.PORT = Integer.parseInt(line.getOptionValue("s"));
                 Config.IMAGE = line.getOptionValue("I")!=null?line.getOptionValue("I"):Config.IMAGE;
+                log.debug("Docker Image: {}", Config.IMAGE);
                 ApiServer server = new ApiServer(directory, serverless);
                 server.start();
 
