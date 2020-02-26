@@ -77,10 +77,18 @@ public class ApiServer {
             }
             boolean isCors = function.getEvents() != null && !function.getEvents().isEmpty() && function.getEvents().get(0).getHttp().isCors();
             if (isCors) {
-				response.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-				response.header("Access-Control-Allow-Origin", "*");
-				response.header("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,");
-				response.header("Access-Control-Allow-Credentials", "true");
+                if(!response.raw().containsHeader("Access-Control-Allow-Origin")){
+                    response.header("Access-Control-Allow-Origin", "*");
+                }
+                if(!response.raw().containsHeader("Access-Control-Allow-Methods")){
+                    response.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+                }
+                if(!response.raw().containsHeader("Access-Control-Allow-Credentials")){
+                    response.header("Access-Control-Allow-Credentials", "true");
+                }
+                if(!response.raw().containsHeader("Access-Control-Allow-Headers")){
+                    response.header("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,");
+                }
             }
             return response.body();
         };
