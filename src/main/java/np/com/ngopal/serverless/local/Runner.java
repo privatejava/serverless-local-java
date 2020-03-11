@@ -13,6 +13,7 @@ import org.apache.commons.cli.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,10 +21,19 @@ import static np.com.ngopal.serverless.local.AWSProfile.processAWSProfile;
 
 /**
  * This class is the main class for handling the commandline arguments to run the local lambda instance using docker.
+ *
  * @author ngm
  */
 @Slf4j
 public class Runner {
+
+    public static String getChar(int occurance, char c) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < occurance; i++) {
+            builder.append(c);
+        }
+        return builder.toString();
+    }
 
     public static void main(String[] args) throws IOException {
 
@@ -34,6 +44,7 @@ public class Runner {
         options.addOption("f", true, "Function to run");
         options.addOption("i", true, "Input json");
         options.addOption("I", true, "Docker Image");
+        options.addOption("e", true, "Environment File (Default to .env of project directory)");
 
         CommandLineParser parser = new DefaultParser();
 
@@ -59,6 +70,26 @@ public class Runner {
                 Config.SERVERLESS = serverless;
                 Config.PROFILE_NAME = line.getOptionValue("P");
                 processAWSProfile();
+                File f = new File(directory + "/.env");
+                if(line.hasOption("e")){
+                    f = new File(line.getOptionValue("e"));
+                }
+
+                if (f.exists() && f.isFile()) {
+                    String data = new String(Files.readAllBytes(f.toPath()));
+                    for (String l : data.split("\n")) {
+                        if (l.contains("=")) {
+                            int index = l.indexOf("=");
+                            String key = l.substring(0, index);
+                            String value = l.substring(index + 1);
+                            System.out.println("Extracted from .env " + key + ":" + getChar(value.length(), '*'));
+                            Config.SERVERLESS.getProvider().getEnvironment().put(key, value);
+                        }
+                    }
+
+                }
+
+
             }
 
 
@@ -66,7 +97,7 @@ public class Runner {
                 executed = true;
                 Config.SERVER = true;
                 Config.PORT = Integer.parseInt(line.getOptionValue("s"));
-                Config.IMAGE = line.getOptionValue("I")!=null?line.getOptionValue("I"):Config.IMAGE;
+                Config.IMAGE = line.getOptionValue("I") != null ? line.getOptionValue("I") : Config.IMAGE;
                 log.debug("Docker Image: {}", Config.IMAGE);
                 ApiServer server = new ApiServer(directory, serverless);
                 server.start();
@@ -81,10 +112,10 @@ public class Runner {
                     input = UtilsFactory.get().getMapper().readValue(new File(line.getOptionValue("i")), new TypeReference<Map<String, Object>>() {
                     });
                 }
-                log.debug("Function: {}",line.getOptionValue("f"));
-                log.debug("Input: {}",input);
-                log.debug("Dir: {}",directory);
-                log.debug("Future+: {}",completableFuture);
+                log.debug("Function: {}", line.getOptionValue("f"));
+                log.debug("Input: {}", input);
+                log.debug("Dir: {}", directory);
+                log.debug("Future+: {}", completableFuture);
                 LambdaExecutor.execute(directory, serverless.getFunction(line.getOptionValue("f")), input, completableFuture);
 
             }
