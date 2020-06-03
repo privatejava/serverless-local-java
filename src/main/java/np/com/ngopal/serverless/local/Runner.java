@@ -14,6 +14,7 @@ import org.apache.commons.cli.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -67,6 +68,9 @@ public class Runner {
                 log.debug("Using working dir: {}", directory.getAbsolutePath());
                 compiler.executeDependency(directory);
                 serverless = YamlParser.parse(line.getOptionValue("p"));
+                if(serverless.getProvider().getEnvironment() == null){
+                    serverless.getProvider().setEnvironment(new HashMap<>());
+                }
                 Config.SERVERLESS = serverless;
                 Config.PROFILE_NAME = line.getOptionValue("P");
                 processAWSProfile();
