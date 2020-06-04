@@ -104,6 +104,9 @@ public class ApiServer {
             if (entry.getValue() != null && entry.getValue().getEvents() != null) {
                 for (Event e : entry.getValue().getEvents()) {
                     String path = e.getHttp().getPath().replace("{", ":").replace("}", "");
+                    if(e.getHttp() ==null ||  e.getHttp().getMethod() ==null){
+                        continue;
+                    }
                     if (e.getHttp().getMethod().equalsIgnoreCase("get")) {
                         get(path, getRoute(entry.getValue()));
                         log.debug("Mapping [{}]\t-> {}", "GET", path);
