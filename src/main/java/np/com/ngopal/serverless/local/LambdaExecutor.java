@@ -82,7 +82,18 @@ public class LambdaExecutor {
 				log.debug("Success: {}", i);
 				try {
 					ByteArrayInputStream bais = new ByteArrayInputStream(stdOut.toByteArray());
-					Response resp = new Response(new BufferedReader(new InputStreamReader(bais)));
+					ByteArrayInputStream baes = new ByteArrayInputStream(stdErr.toByteArray());
+					InputStream allStream = null;
+					if(stdErr.size() > 0){
+						allStream = new SequenceInputStream(
+							baes,
+							bais
+						);
+					}else{
+						allStream = bais;
+					}
+
+					Response resp = new Response(new BufferedReader(new InputStreamReader(allStream)));
 					if (resp.getResponse().getBody().equals("INVALID")) {
 						bais = new ByteArrayInputStream(stdErr.toByteArray());
 						resp = new Response(new BufferedReader(new InputStreamReader(bais)));
